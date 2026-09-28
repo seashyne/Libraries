@@ -1,21 +1,35 @@
 # 🌊 Seashyne Lua Libraries
 
-100% original, zero-dependency, pure Lua 5.1/5.2/5.3/5.4 & LuaJIT libraries authored and maintained exclusively by **Seashyne**.
-Crafted for Minecraft Avatar Runtime (Shyne Core), Love2D, Defold, and game scripting.
+Collection of pure Lua 5.1/5.2/5.3/5.4 & LuaJIT libraries adhering to **Open Source (MIT)** standards.
+Engineered for Minecraft Avatar Scripting (Shyne Core), game engines, and standalone Lua tooling.
 
-## Original Modules
+---
 
-| Library | File | Size | Description |
+## 🛠️ Seashyne Custom Systems (Built for Shyne Mod)
+
+These libraries are **created and maintained directly by Seashyne** to make avatar creation and Minecraft scripting effortless:
+
+| Library | File | Description |
+| :--- | :--- | :--- |
+| **vector** | `vector.lua` | 2D/3D Vector math for Minecraft positions, look vectors, dot, cross, and lerp |
+| **signal** | `signal.lua` | Decoupled Event & Observer dispatcher for cleanly organizing complex avatar state |
+| **color** | `color.lua` | RGBA, Hex parser (`#FF0000`), integer bitpacking, and smooth color gradients |
+| **timer** | `timer.lua` | Frame-rate independent scheduler (`after`, `every`) without manual tick counting |
+| **noise** | `noise.lua` | 1D/2D/3D Perlin noise generator for procedural cloth, hair, and floating animations |
+
+---
+
+## 🌟 Curated Open Source Libraries (Full MIT Credits)
+
+Industry-standard battle-tested Lua modules bundled under their original MIT terms:
+
+| Library | Author | Original Repository | Description |
 | :--- | :--- | :--- | :--- |
-| **classic** | `classic.lua` | ~1.1 KB | Original Class-based Object-Oriented Programming (OOP) |
-| **tween** | `tween.lua` | ~4.5 KB | Original complete tweening engine with 24+ Penner easing curves |
-| **vector** | `vector.lua` | ~2.8 KB | 2D/3D Vector math (add, sub, dot, cross, lerp, distance) |
-| **signal** | `signal.lua` | ~1.2 KB | Lightweight Event & Observer dispatcher |
-| **color** | `color.lua` | ~2.0 KB | Hex, RGB, HSL, Lerp, and integer color utilities |
-| **timer** | `timer.lua` | ~1.8 KB | Frame-rate independent delay & periodic timer scheduler |
-| **noise** | `noise.lua` | ~3.6 KB | Fast 1D, 2D, and 3D Perlin noise generator |
-| **inspect** | `inspect.lua` | ~2.5 KB | Original table serialization, cycle-detection, and debug printer |
+| **classic** | **rxi** | [rxi/classic](https://github.com/rxi/classic) | Tiny, fast Class-based OOP with single inheritance |
+| **tween** | **kikito** | [kikito/tween.lua](https://github.com/kikito/tween.lua) | Tweening library with Robert Penner easing equations |
+| **inspect** | **kikito** | [kikito/inspect.lua](https://github.com/kikito/inspect.lua) | Human-readable Lua table serialization and debugger |
 
-## Philosophy
+---
 
-Every module in this folder is **100% written and maintained by Seashyne** without external vendor dependencies.
+## 📄 License & Attribution
+All libraries in this repository are distributed under the terms of the [MIT License](../LICENSE). Original author headers and copyright notices are preserved 100% in compliance with open-source standards.

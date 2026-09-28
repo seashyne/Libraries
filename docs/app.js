@@ -4,9 +4,11 @@ const CATALOG = [
     id: "lua-classic",
     name: "classic.lua",
     language: "lua",
+    author: "rxi",
+    type: "curated-mit",
     version: "0.1.0",
     category: "OOP / Class",
-    description: "Tiny, fast Class-based Object-Oriented Programming for pure Lua.",
+    description: "Tiny, fast Class-based Object-Oriented Programming for pure Lua by rxi (MIT).",
     file: "../lua/classic.lua",
     raw_url: "https://raw.githubusercontent.com/seashyne/Libraries/main/lua/classic.lua",
     cdn_url: "https://cdn.jsdelivr.net/gh/seashyne/Libraries@main/lua/classic.lua",
@@ -27,9 +29,11 @@ print(p.x, p.y)`
     id: "lua-tween",
     name: "tween.lua",
     language: "lua",
+    author: "Enrique García Cota (kikito)",
+    type: "curated-mit",
     version: "2.1.1",
     category: "Animation / Tween",
-    description: "Complete tweening engine with all standard Robert Penner easing equations.",
+    description: "Complete tweening engine with all standard Robert Penner easing equations by kikito (MIT).",
     file: "../lua/tween.lua",
     raw_url: "https://raw.githubusercontent.com/seashyne/Libraries/main/lua/tween.lua",
     cdn_url: "https://cdn.jsdelivr.net/gh/seashyne/Libraries@main/lua/tween.lua",
@@ -46,13 +50,15 @@ local complete = t:update(dt)`
     id: "lua-noise",
     name: "noise.lua",
     language: "lua",
+    author: "Seashyne",
+    type: "seashyne-original",
     version: "1.0.0",
     category: "Math / Procedural",
-    description: "Fast 1D, 2D, and 3D Perlin and Simplex noise generator for Lua.",
+    description: "Original fast 1D, 2D, and 3D Perlin noise generator created for Minecraft avatars.",
     file: "../lua/noise.lua",
     raw_url: "https://raw.githubusercontent.com/seashyne/Libraries/main/lua/noise.lua",
     cdn_url: "https://cdn.jsdelivr.net/gh/seashyne/Libraries@main/lua/noise.lua",
-    tags: ["noise", "perlin", "simplex", "procedural", "lua"],
+    tags: ["noise", "perlin", "procedural", "lua"],
     sample: `local noise = require("noise")
 
 local height = noise.perlin2d(worldX * 0.05, worldZ * 0.05)
@@ -62,9 +68,11 @@ local density = noise.perlin3d(x * 0.1, y * 0.1, z * 0.1)`
     id: "lua-vector",
     name: "vector.lua",
     language: "lua",
+    author: "Seashyne",
+    type: "seashyne-original",
     version: "1.0.0",
     category: "Math / Vector",
-    description: "2D and 3D vector arithmetic with operator overloads, dot, cross, and lerp.",
+    description: "Original 2D and 3D vector arithmetic with operator overloads, dot, cross, and lerp.",
     file: "../lua/vector.lua",
     raw_url: "https://raw.githubusercontent.com/seashyne/Libraries/main/lua/vector.lua",
     cdn_url: "https://cdn.jsdelivr.net/gh/seashyne/Libraries@main/lua/vector.lua",
@@ -80,9 +88,11 @@ local interpolated = a:lerp(b, 0.5)`
     id: "lua-signal",
     name: "signal.lua",
     language: "lua",
+    author: "Seashyne",
+    type: "seashyne-original",
     version: "1.0.0",
     category: "Events / Observer",
-    description: "Lightweight Event/Observer publisher for decoupled event messaging.",
+    description: "Original lightweight Event/Observer publisher for decoupled avatar event messaging.",
     file: "../lua/signal.lua",
     raw_url: "https://raw.githubusercontent.com/seashyne/Libraries/main/lua/signal.lua",
     cdn_url: "https://cdn.jsdelivr.net/gh/seashyne/Libraries@main/lua/signal.lua",
@@ -101,9 +111,11 @@ disconnect() -- Unsubscribe`
     id: "lua-inspect",
     name: "inspect.lua",
     language: "lua",
+    author: "Enrique García Cota (kikito)",
+    type: "curated-mit",
     version: "3.1.0",
     category: "Debug / Tools",
-    description: "Human-readable Lua table serialization and debugging printer.",
+    description: "Human-readable Lua table serialization and debugging printer by kikito (MIT).",
     file: "../lua/inspect.lua",
     raw_url: "https://raw.githubusercontent.com/seashyne/Libraries/main/lua/inspect.lua",
     cdn_url: "https://cdn.jsdelivr.net/gh/seashyne/Libraries@main/lua/inspect.lua",
@@ -117,6 +129,8 @@ print(inspect(data))`
     id: "lua-color",
     name: "color.lua",
     language: "lua",
+    author: "Seashyne",
+    type: "seashyne-original",
     version: "1.0.0",
     category: "Utility / Colors",
     description: "Original RGBA, Hex, integer bitpacking, and color lerp utilities.",
@@ -135,9 +149,11 @@ print(purple:toHex())`
     id: "lua-timer",
     name: "timer.lua",
     language: "lua",
+    author: "Seashyne",
+    type: "seashyne-original",
     version: "1.0.0",
     category: "Utility / Scheduler",
-    description: "Original delay, periodic timer, and animation task scheduler.",
+    description: "Original frame-rate independent delay, periodic timer, and animation task scheduler.",
     file: "../lua/timer.lua",
     raw_url: "https://raw.githubusercontent.com/seashyne/Libraries/main/lua/timer.lua",
     cdn_url: "https://cdn.jsdelivr.net/gh/seashyne/Libraries@main/lua/timer.lua",
@@ -156,9 +172,11 @@ timer.update(dt)`
     id: "c-tween",
     name: "seashyne_tween.h",
     language: "c",
+    author: "Seashyne",
+    type: "seashyne-original",
     version: "1.0.0",
     category: "Animation / Tween",
-    description: "C99 single-header easing and interpolation curves (Penner equations).",
+    description: "Original C99 single-header easing and interpolation curves (Robert Penner equations).",
     file: "../c/include/seashyne_tween.h",
     raw_url: "https://raw.githubusercontent.com/seashyne/Libraries/main/c/include/seashyne_tween.h",
     cdn_url: "https://cdn.jsdelivr.net/gh/seashyne/Libraries@main/c/include/seashyne_tween.h",
@@ -173,9 +191,11 @@ float pos = seashyne_lerp(0.0f, 100.0f, curved);`
     id: "c-math",
     name: "seashyne_math.h",
     language: "c",
+    author: "Seashyne",
+    type: "seashyne-original",
     version: "1.0.0",
     category: "Math / Vector",
-    description: "C99 single-header 2D/3D vector math functions with dot, cross, lerp.",
+    description: "Original C99 single-header 2D/3D vector math functions with dot, cross, and lerp.",
     file: "../c/include/seashyne_math.h",
     raw_url: "https://raw.githubusercontent.com/seashyne/Libraries/main/c/include/seashyne_math.h",
     cdn_url: "https://cdn.jsdelivr.net/gh/seashyne/Libraries@main/c/include/seashyne_math.h",
@@ -191,9 +211,11 @@ float dist = seashyne_vec3_distance(a, b);`
     id: "c-noise",
     name: "seashyne_noise.h",
     language: "c",
+    author: "Seashyne",
+    type: "seashyne-original",
     version: "1.0.0",
     category: "Math / Procedural",
-    description: "C99 single-header 2D/3D Perlin noise generator.",
+    description: "Original C99 single-header 2D/3D Perlin noise generator.",
     file: "../c/include/seashyne_noise.h",
     raw_url: "https://raw.githubusercontent.com/seashyne/Libraries/main/c/include/seashyne_noise.h",
     cdn_url: "https://cdn.jsdelivr.net/gh/seashyne/Libraries@main/c/include/seashyne_noise.h",
@@ -207,9 +229,11 @@ float d = seashyne_perlin3d(x * 0.05f, y * 0.05f, z * 0.05f);`
     id: "cpp-tween",
     name: "seashyne/tween.hpp",
     language: "cpp",
+    author: "Seashyne",
+    type: "seashyne-original",
     version: "1.0.0",
     category: "Animation / Tween",
-    description: "Modern C++20 header-only easing engine with lerp and bounce support.",
+    description: "Original Modern C++20 header-only easing engine with lerp and bounce support.",
     file: "../cpp/include/seashyne/tween.hpp",
     raw_url: "https://raw.githubusercontent.com/seashyne/Libraries/main/cpp/include/seashyne/tween.hpp",
     cdn_url: "https://cdn.jsdelivr.net/gh/seashyne/Libraries@main/cpp/include/seashyne/tween.hpp",
@@ -224,9 +248,11 @@ float current_x = Tween::lerp(0.0f, 500.0f, progress);`
     id: "cpp-math",
     name: "seashyne/math.hpp",
     language: "cpp",
+    author: "Seashyne",
+    type: "seashyne-original",
     version: "1.0.0",
     category: "Math / Vector",
-    description: "Modern C++20 Vector2 and Vector3 structs with full operator support.",
+    description: "Original Modern C++20 Vector2 and Vector3 structs with full operator support.",
     file: "../cpp/include/seashyne/math.hpp",
     raw_url: "https://raw.githubusercontent.com/seashyne/Libraries/main/cpp/include/seashyne/math.hpp",
     cdn_url: "https://cdn.jsdelivr.net/gh/seashyne/Libraries@main/cpp/include/seashyne/math.hpp",
@@ -242,9 +268,11 @@ Vec3 mid = pos.lerp(target, 0.5f);`
     id: "cpp-signal",
     name: "seashyne/signal.hpp",
     language: "cpp",
+    author: "Seashyne",
+    type: "seashyne-original",
     version: "1.0.0",
     category: "Events / Observer",
-    description: "Type-safe event dispatcher and signal connection manager.",
+    description: "Original Modern C++ type-safe event dispatcher and signal connection manager.",
     file: "../cpp/include/seashyne/signal.hpp",
     raw_url: "https://raw.githubusercontent.com/seashyne/Libraries/main/cpp/include/seashyne/signal.hpp",
     cdn_url: "https://cdn.jsdelivr.net/gh/seashyne/Libraries@main/cpp/include/seashyne/signal.hpp",
@@ -261,9 +289,11 @@ onHit.emit(50, 1.2f);`
     id: "csharp-core",
     name: "Seashyne.Core",
     language: "csharp",
+    author: "Seashyne",
+    type: "seashyne-original",
     version: "1.0.0",
     category: "Utility / Cross-Platform",
-    description: "C# (.NET 8 & Unity) library with Vector3D, Tweener, PerlinNoise, and Signal.",
+    description: "Original C# (.NET 8 & Unity) library with Vector3D, Tweener, PerlinNoise, and Signal.",
     file: "../csharp/Seashyne.Core/Seashyne.Core.csproj",
     raw_url: "https://raw.githubusercontent.com/seashyne/Libraries/main/csharp/Seashyne.Core/",
     cdn_url: "https://cdn.jsdelivr.net/gh/seashyne/Libraries@main/csharp/Seashyne.Core/",
@@ -281,9 +311,11 @@ float alpha = Tweener.Ease(EaseType.OutBounce, 0.7f);`
     id: "python-seashyne",
     name: "seashyne",
     language: "python",
+    author: "Seashyne",
+    type: "seashyne-original",
     version: "1.0.0",
     category: "Utility / Math",
-    description: "Zero-dependency Python package with Vec2/Vec3, ease curves, Perlin noise, and Signal.",
+    description: "Original zero-dependency Python package with Vec2/Vec3, ease curves, Perlin noise, and Signal.",
     file: "../python/seashyne/__init__.py",
     raw_url: "https://raw.githubusercontent.com/seashyne/Libraries/main/python/seashyne/",
     cdn_url: "https://cdn.jsdelivr.net/gh/seashyne/Libraries@main/python/seashyne/",
@@ -312,6 +344,7 @@ const codeModal = document.getElementById("codeModal");
 const closeModalBtn = document.getElementById("closeModalBtn");
 const modalTitle = document.getElementById("modalTitle");
 const modalLangBadge = document.getElementById("modalLangBadge");
+const modalAuthorBadge = document.getElementById("modalAuthorBadge");
 const modalDesc = document.getElementById("modalDesc");
 const modalCode = document.getElementById("modalCode");
 const copyCodeBtn = document.getElementById("copyCodeBtn");
@@ -351,6 +384,11 @@ function renderCards() {
     card.onclick = () => openModal(item);
 
     const tagsHtml = item.tags.map(t => `<span class="card-tag">#${t}</span>`).join("");
+    const isCurated = item.type === "curated-mit";
+    const authorLabel = isCurated
+      ? `By <strong>${item.author}</strong> (MIT)`
+      : `By <strong>${item.author || "Seashyne"}</strong>`;
+    const authorPillClass = isCurated ? "author-pill curated" : "author-pill";
 
     card.innerHTML = `
       <div>
@@ -358,7 +396,8 @@ function renderCards() {
           <h3 class="card-title">${item.name}</h3>
           <span class="card-badge badge-${item.language}">${item.language.toUpperCase()}</span>
         </div>
-        <p class="card-desc">${item.description}</p>
+        <span class="${authorPillClass}">${authorLabel}</span>
+        <p class="card-desc" style="margin-top:10px;">${item.description}</p>
         <div class="card-tags">${tagsHtml}</div>
       </div>
       <div class="card-footer">
@@ -377,6 +416,15 @@ async function openModal(item) {
   modalDesc.textContent = item.description;
   modalLangBadge.textContent = item.language.toUpperCase();
   modalLangBadge.className = `card-badge badge-${item.language}`;
+
+  // Author badge
+  if (modalAuthorBadge) {
+    const isCurated = item.type === "curated-mit";
+    modalAuthorBadge.className = isCurated ? "author-pill curated" : "author-pill";
+    modalAuthorBadge.textContent = isCurated
+      ? `By ${item.author} (MIT Curated)`
+      : `By ${item.author || "Seashyne"} · Original`;
+  }
   
   modalCode.textContent = item.sample || "// Loading source code...";
   downloadBtn.href = item.raw_url;

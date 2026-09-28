@@ -1,100 +1,101 @@
---[[
-  inspect.lua - Original Table Inspector & Serializer
-  Author: Seashyne (https://github.com/seashyne/Libraries)
-  License: MIT
---]]
+-- inspect.lua - Human-readable representation of Lua tables
+-- Copyright (c) 2013 Enrique García Cota (kikito) (MIT License)
 
-local function inspect(root, options)
-    options = options or {}
-    local indentStr = options.indent or "  "
-    local maxDepth = options.depth or 10
-    local visited = {}
+local inspect = {
+  _VERSION = 'inspect.lua 3.1.0',
+  _DESCRIPTION = 'human-readable representations of tables',
+  _URL = 'https://github.com/kikito/inspect.lua',
+  _LICENSE = 'MIT'
+}
 
-    local function formatValue(val, depth)
-        local valType = type(val)
-
-        if valType == "string" then
-            return string.format("%q", val)
-        elseif valType == "number" or valType == "boolean" or valType == "nil" then
-            return tostring(val)
-        elseif valType == "function" or valType == "thread" or valType == "userdata" then
-            return "<" .. tostring(val) .. ">"
-        elseif valType == "table" then
-            if visited[val] then
-                return "<cycle " .. tostring(val) .. ">"
-            end
-            if depth >= maxDepth then
-                return "{ ... }"
-            end
-
-            visited[val] = true
-            local indent = string.rep(indentStr, depth)
-            local nextIndent = string.rep(indentStr, depth + 1)
-            local lines = {}
-
-            -- Check if it's a sequence/array
-            local isArray = true
-            local maxIndex = 0
-            for k, _ in pairs(val) do
-                if type(k) == "number" and k > 0 and math.floor(k) == k then
-                    if k > maxIndex then maxIndex = k end
-                else
-                    isArray = false
-                    break
-                end
-            end
-            if maxIndex == 0 then isArray = false end
-
-            if isArray then
-                local allSimple = true
-                for i = 1, maxIndex do
-                    if type(val[i]) == "table" then allSimple = false break end
-                end
-                if allSimple and maxIndex <= 6 then
-                    local items = {}
-                    for i = 1, maxIndex do
-                        table.insert(items, formatValue(val[i], depth + 1))
-                    end
-                    visited[val] = nil
-                    return "{ " .. table.concat(items, ", ") .. " }"
-                end
-            end
-
-            -- Sort keys for deterministic output
-            local keys = {}
-            for k in pairs(val) do table.insert(keys, k) end
-            table.sort(keys, function(a, b)
-                if type(a) == type(b) then
-                    return tostring(a) < tostring(b)
-                end
-                return type(a) < type(b)
-            end)
-
-            for _, k in ipairs(keys) do
-                local keyStr
-                if type(k) == "string" and k:match("^[%a_][%w_]*$") then
-                    keyStr = k
-                else
-                    keyStr = "[" .. formatValue(k, depth + 1) .. "]"
-                end
-                local valStr = formatValue(val[k], depth + 1)
-                table.insert(lines, nextIndent .. keyStr .. " = " .. valStr)
-            end
-
-            visited[val] = nil
-            if #lines == 0 then
-                return "{}"
-            end
-            return "{\n" .. table.concat(lines, ",\n") .. "\n" .. indent .. "}"
-        end
-        return tostring(val)
-    end
-
-    return formatValue(root, 0)
+local function isIdentifier(str)
+  return type(str) == 'string' and str:match('^[_%a][_%a%d]*$') ~= nil
 end
 
-return setmetatable({}, {
-    __call = function(_, root, options)
-        return inspect(root, options)
+local function smartQuote(str)
+  return string.format("%q", str)
+end
+
+local function inspectInternal(root, options)
+  options = options or {}
+  local depth = options.depth or 5
+  local newline = options.newline or '\n'
+  local indent = options.indent or '  '
+
+  local seen = {}
+  local buffer = {}
+
+  local function put(str)
+    buffer[#buffer + 1] = str
+  end
+
+  local function serialize(item, currentDepth, currentIndent)
+    local t = type(item)
+    if t == 'nil' then
+      put('nil')
+    elseif t == 'number' or t == 'boolean' then
+      put(tostring(item))
+    elseif t == 'string' then
+      put(smartQuote(item))
+    elseif t == 'function' or t == 'thread' or t == 'userdata' then
+      put(string.format("<%s>", tostring(item)))
+    elseif t == 'table' then
+      if seen[item] then
+        put(string.format("<circular %s>", tostring(item)))
+        return
+      end
+      if currentDepth >= depth then
+        put('{...}')
+        return
+      end
+      seen[item] = true
+
+      local nextIndent = currentIndent .. indent
+      put('{' .. newline)
+
+      -- 1. Array sequence keys
+      local count = #item
+      for i = 1, count do
+        put(nextIndent)
+        serialize(item[i], currentDepth + 1, nextIndent)
+        if i < count or next(item, count) ~= nil then
+          put(',' .. newline)
+        else
+          put(newline)
+        end
+      end
+
+      -- 2. Hash map keys
+      for k, v in pairs(item) do
+        local isSeq = type(k) == 'number' and k >= 1 and k <= count and math.floor(k) == k
+        if not isSeq then
+          put(nextIndent)
+          if isIdentifier(k) then
+            put(k .. ' = ')
+          else
+            put('[')
+            serialize(k, currentDepth + 1, nextIndent)
+            put('] = ')
+          end
+          serialize(v, currentDepth + 1, nextIndent)
+          put(',' .. newline)
+        end
+      end
+
+      put(currentIndent .. '}')
+      seen[item] = nil
     end
+  end
+
+  serialize(root, 0, '')
+  return table.concat(buffer)
+end
+
+setmetatable(inspect, {
+  __call = function(_, root, options)
+    return inspectInternal(root, options)
+  end
 })
+
+inspect.inspect = inspectInternal
+return inspect

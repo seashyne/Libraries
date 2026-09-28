@@ -399,6 +399,23 @@ body {
 .badge-csharp { background: rgba(23, 134, 0, 0.2); color: #58d844; border: 1px solid rgba(23, 134, 0, 0.4); }
 .badge-python { background: rgba(53, 114, 165, 0.2); color: #6dbaff; border: 1px solid rgba(53, 114, 165, 0.4); }
 
+.author-pill {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+  background: rgba(0, 240, 255, 0.1);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  margin-top: 4px;
+}
+.author-pill.curated {
+  background: rgba(139, 92, 246, 0.12);
+  color: #c4b5fd;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
 .card-desc {
   font-size: 13.5px;
   color: var(--text-muted);

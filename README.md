@@ -11,11 +11,12 @@ A unified, lightweight, cross-language developer library ecosystem designed for 
 
 ## 🌟 Key Principles
 
-1. **100% Original Seashyne Creations**: Everything in this repository is designed and written directly by Seashyne. We do not import or vend third-party dependencies or foreign library files.
-2. **Zero External Dependencies**: Every library is 100% self-contained pure code. No bloated npm/pip/nuget dependency trees.
-3. **Cross-Language Consistency**: Algorithms (Robert Penner easing, Perlin/Simplex noise, Vector mathematics, Signal/Observer events) work identically across all 5 supported languages.
-4. **Plug-and-Play**: Copy a single `.lua`, `.h`, `.hpp`, or `.cs` file directly into your project, or consume via raw CDN URLs.
-5. **Machine-Readable Registry**: Includes [`registry.json`](registry.json) for automated tooling, package managers, and runtime loaders.
+1. **Seashyne Custom Systems**: The core math, signal, timer, and cross-language toolkits are crafted directly by Seashyne to make Minecraft avatar creation and multi-language development seamless.
+2. **Curated Open Source (MIT Standards)**: Industry-standard community modules (`classic.lua`, `tween.lua`, `inspect.lua`) are bundled under strict MIT license terms with original author copyright headers preserved.
+3. **Zero External Dependencies**: Every library is 100% self-contained pure code. No bloated dependency trees.
+4. **Cross-Language Consistency**: Algorithms (easing, noise, vectors, signals) work with matching design across all 5 supported languages.
+5. **Plug-and-Play**: Copy a single `.lua`, `.h`, `.hpp`, or `.cs` file directly into your project, or consume via raw CDN URLs.
+6. **Machine-Readable Registry**: Includes [`registry.json`](registry.json) for automated tooling, package managers, and runtime loaders.
 
 ---
 
