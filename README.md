@@ -1,4 +1,4 @@
-# 🌊 Seashyne Libraries
+#  Seashyne Libraries
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Languages](https://img.shields.io/badge/Languages-Lua%20%7C%20C%20%7C%20C%2B%2B%20%7C%20C%23%20%7C%20Python-blue)](#ecosystem)
@@ -9,7 +9,7 @@ A unified, lightweight, cross-language developer library ecosystem designed for 
 
 ---
 
-## 🌟 Key Principles
+##  Key Principles
 
 1. **Seashyne Custom Systems**: The core math, signal, timer, and cross-language toolkits are crafted directly by Seashyne to make Minecraft avatar creation and multi-language development seamless.
 2. **Curated Open Source (MIT Standards)**: Industry-standard community modules (`classic.lua`, `tween.lua`, `inspect.lua`) are bundled under strict MIT license terms with original author copyright headers preserved.
@@ -20,7 +20,7 @@ A unified, lightweight, cross-language developer library ecosystem designed for 
 
 ---
 
-## 🌐 Live Web Portal & Documentation
+##  Live Web Portal & Documentation
 
 Visit the interactive catalog at **[seashyne.github.io/Libraries](https://seashyne.github.io/Libraries/)** to:
 - 🔍 Search and filter libraries across all languages.
@@ -30,7 +30,7 @@ Visit the interactive catalog at **[seashyne.github.io/Libraries](https://seashy
 
 ---
 
-## 📁 Repository Structure
+##  Repository Structure
 
 ```
 Libraries/
@@ -80,7 +80,7 @@ Libraries/
 
 ---
 
-## 🚀 Quick Usage by Language
+##  Quick Usage by Language
 
 ### 1. Lua (Minecraft Shyne Core / Love2D / Defold)
 ```lua
@@ -136,7 +136,7 @@ height = perlin2d(12.5, 44.2)
 
 ---
 
-## ⚡ Direct CDN & Download Links
+##  Direct CDN & Download Links
 
 You can load or download any file directly from jsDelivr CDN or GitHub raw:
 
@@ -152,5 +152,5 @@ You can load or download any file directly from jsDelivr CDN or GitHub raw:
 
 ---
 
-## 📄 License
+##  License
 This repository is open-source software licensed under the **[MIT License](LICENSE)**. Free for commercial, personal, and educational use.
