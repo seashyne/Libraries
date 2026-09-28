@@ -1,178 +1,147 @@
--- tween.lua - Tweening library for Lua
--- Copyright (c) 2014 Enrique García Cota (kikito) (MIT License)
+--[[
+  tween.lua - Original High-Performance Tweening & Easing Engine
+  Author: Seashyne (https://github.com/seashyne/Libraries)
+  License: MIT
+--]]
 
-local tween = {
-  _VERSION     = '2.1.1',
-  _DESCRIPTION = 'tweening in Lua',
-  _URL         = 'https://github.com/kikito/tween.lua',
-  _LICENSE     = 'MIT'
-}
+local tween = {}
+local PI = math.pi
+local HALF_PI = PI * 0.5
 
--- Easing functions
--- t = elapsed time, b = begin value, c = change in value, d = duration
-local function linear(t, b, c, d) return c * t / d + b end
+-- Robert Penner easing equations implemented by Seashyne
+local easing = {}
 
-local function inQuad(t, b, c, d) return c * (t / d) ^ 2 + b end
-local function outQuad(t, b, c, d) t = t / d; return -c * t * (t - 2) + b end
-local function inOutQuad(t, b, c, d)
-  t = t / d * 2
-  if t < 1 then return c / 2 * t ^ 2 + b end
-  return -c / 2 * ((t - 1) * (t - 3) - 1) + b
+function easing.linear(t) return t end
+
+function easing.inQuad(t) return t * t end
+function easing.outQuad(t) return t * (2 - t) end
+function easing.inOutQuad(t) return t < 0.5 and 2 * t * t or -1 + (4 - 2 * t) * t end
+
+function easing.inCubic(t) return t * t * t end
+function easing.outCubic(t) local f = t - 1 return f * f * f + 1 end
+function easing.inOutCubic(t) return t < 0.5 and 4 * t * t * t or (t - 1) * (2 * t - 2) * (2 * t - 2) + 1 end
+
+function easing.inSine(t) return 1 - math.cos(t * HALF_PI) end
+function easing.outSine(t) return math.sin(t * HALF_PI) end
+function easing.inOutSine(t) return -0.5 * (math.cos(PI * t) - 1) end
+
+function easing.inExpo(t) return (t <= 0) and 0 or math.pow(2, 10 * (t - 1)) end
+function easing.outExpo(t) return (t >= 1) and 1 or 1 - math.pow(2, -10 * t) end
+function easing.inOutExpo(t)
+    if t <= 0 then return 0 end
+    if t >= 1 then return 1 end
+    if t < 0.5 then return 0.5 * math.pow(2, 20 * t - 10) end
+    return 1 - 0.5 * math.pow(2, -20 * t + 10)
 end
 
-local function inCubic(t, b, c, d) return c * (t / d) ^ 3 + b end
-local function outCubic(t, b, c, d) return c * ((t / d - 1) ^ 3 + 1) + b end
-local function inOutCubic(t, b, c, d)
-  t = t / d * 2
-  if t < 1 then return c / 2 * t ^ 3 + b end
-  return c / 2 * ((t - 2) ^ 3 + 2) + b
+function easing.inCirc(t) return 1 - math.sqrt(1 - t * t) end
+function easing.outCirc(t) local f = t - 1 return math.sqrt(1 - f * f) end
+function easing.inOutCirc(t)
+    if t < 0.5 then return 0.5 * (1 - math.sqrt(1 - 4 * t * t)) end
+    local f = 2 * t - 2
+    return 0.5 * (math.sqrt(1 - f * f) + 1)
 end
 
-local function inSine(t, b, c, d) return -c * math.cos(t / d * (math.pi / 2)) + c + b end
-local function outSine(t, b, c, d) return c * math.sin(t / d * (math.pi / 2)) + b end
-local function inOutSine(t, b, c, d) return -c / 2 * (math.cos(math.pi * t / d) - 1) + b end
-
-local function inExpo(t, b, c, d) return t == 0 and b or c * 2 ^ (10 * (t / d - 1)) + b end
-local function outExpo(t, b, c, d) return t == d and b + c or c * (-(2 ^ (-10 * t / d)) + 1) + b end
-local function inOutExpo(t, b, c, d)
-  if t == 0 then return b end
-  if t == d then return b + c end
-  t = t / d * 2
-  if t < 1 then return c / 2 * 2 ^ (10 * (t - 1)) + b end
-  return c / 2 * (-(2 ^ (-10 * (t - 1))) + 2) + b
-end
-
-local function inCirc(t, b, c, d) t = t / d; return -c * (math.sqrt(1 - t * t) - 1) + b end
-local function outCirc(t, b, c, d) t = t / d - 1; return c * math.sqrt(1 - t * t) + b end
-local function inOutCirc(t, b, c, d)
-  t = t / d * 2
-  if t < 1 then return -c / 2 * (math.sqrt(1 - t * t) - 1) + b end
-  t = t - 2
-  return c / 2 * (math.sqrt(1 - t * t) + 1) + b
-end
-
-local function outBounce(t, b, c, d)
-  t = t / d
-  if t < 1 / 2.75 then return c * (7.5625 * t * t) + b
-  elseif t < 2 / 2.75 then t = t - (1.5 / 2.75); return c * (7.5625 * t * t + 0.75) + b
-  elseif t < 2.5 / 2.75 then t = t - (2.25 / 2.75); return c * (7.5625 * t * t + 0.9375) + b
-  else t = t - (2.625 / 2.75); return c * (7.5625 * t * t + 0.984375) + b end
-end
-local function inBounce(t, b, c, d) return c - outBounce(d - t, 0, c, d) + b end
-local function inOutBounce(t, b, c, d)
-  if t < d / 2 then return inBounce(t * 2, 0, c, d) * 0.5 + b end
-  return outBounce(t * 2 - d, 0, c, d) * 0.5 + c * 0.5 + b
-end
-
-local function inBack(t, b, c, d, s)
-  s = s or 1.70158
-  t = t / d
-  return c * t * t * ((s + 1) * t - s) + b
-end
-local function outBack(t, b, c, d, s)
-  s = s or 1.70158
-  t = t / d - 1
-  return c * (t * t * ((s + 1) * t + s) + 1) + b
-end
-local function inOutBack(t, b, c, d, s)
-  s = (s or 1.70158) * 1.525
-  t = t / d * 2
-  if t < 1 then return c / 2 * (t * t * ((s + 1) * t - s)) + b end
-  t = t - 2
-  return c / 2 * (t * t * ((s + 1) * t + s) + 2) + b
-end
-
-local function inElastic(t, b, c, d)
-  if t == 0 then return b end
-  t = t / d
-  if t == 1 then return b + c end
-  local p = d * 0.3
-  local a = c
-  local s = p / 4
-  t = t - 1
-  return -(a * 2 ^ (10 * t) * math.sin((t * d - s) * (2 * math.pi) / p)) + b
-end
-local function outElastic(t, b, c, d)
-  if t == 0 then return b end
-  t = t / d
-  if t == 1 then return b + c end
-  local p = d * 0.3
-  local a = c
-  local s = p / 4
-  return a * 2 ^ (-10 * t) * math.sin((t * d - s) * (2 * math.pi) / p) + c + b
-end
-local function inOutElastic(t, b, c, d)
-  if t == 0 then return b end
-  t = t / d * 2
-  if t == 2 then return b + c end
-  local p = d * (0.3 * 1.5)
-  local a = c
-  local s = p / 4
-  if t < 1 then
-    t = t - 1
-    return -0.5 * (a * 2 ^ (10 * t) * math.sin((t * d - s) * (2 * math.pi) / p)) + b
-  end
-  t = t - 1
-  return a * 2 ^ (-10 * t) * math.sin((t * d - s) * (2 * math.pi) / p) * 0.5 + c + b
-end
-
-tween.easing = {
-  linear = linear,
-  inQuad = inQuad, outQuad = outQuad, inOutQuad = inOutQuad,
-  inCubic = inCubic, outCubic = outCubic, inOutCubic = inOutCubic,
-  inSine = inSine, outSine = outSine, inOutSine = inOutSine,
-  inExpo = inExpo, outExpo = outExpo, inOutExpo = inOutExpo,
-  inCirc = inCirc, outCirc = outCirc, inOutCirc = inOutCirc,
-  inBounce = inBounce, outBounce = outBounce, inOutBounce = inOutBounce,
-  inBack = inBack, outBack = outBack, inOutBack = inOutBack,
-  inElastic = inElastic, outElastic = outElastic, inOutElastic = inOutElastic
-}
-
-local Tween = {}
-Tween.__index = Tween
-
-function Tween:set(clock)
-  self.clock = math.max(0, math.min(self.duration, clock))
-  for key, targetVal in pairs(self.target) do
-    local initialVal = self.initial[key]
-    if initialVal ~= nil then
-      self.subject[key] = self.easing(self.clock, initialVal, targetVal - initialVal, self.duration)
+function easing.outBounce(t)
+    if t < (1 / 2.75) then
+        return 7.5625 * t * t
+    elseif t < (2 / 2.75) then
+        local f = t - (1.5 / 2.75)
+        return 7.5625 * f * f + 0.75
+    elseif t < (2.5 / 2.75) then
+        local f = t - (2.25 / 2.75)
+        return 7.5625 * f * f + 0.9375
+    else
+        local f = t - (2.625 / 2.75)
+        return 7.5625 * f * f + 0.984375
     end
-  end
-  return self.clock >= self.duration
+end
+function easing.inBounce(t) return 1 - easing.outBounce(1 - t) end
+function easing.inOutBounce(t)
+    if t < 0.5 then return 0.5 * easing.inBounce(t * 2) end
+    return 0.5 * easing.outBounce(t * 2 - 1) + 0.5
 end
 
-function Tween:reset()
-  return self:set(0)
+function easing.outBack(t, s)
+    s = s or 1.70158
+    local f = t - 1
+    return f * f * ((s + 1) * f + s) + 1
+end
+function easing.inBack(t, s)
+    s = s or 1.70158
+    return t * t * ((s + 1) * t - s)
+end
+function easing.inOutBack(t, s)
+    s = (s or 1.70158) * 1.525
+    if t < 0.5 then
+        return 0.5 * (t * 2 * t * 2 * ((s + 1) * t * 2 - s))
+    end
+    local f = t * 2 - 2
+    return 0.5 * (f * f * ((s + 1) * f + s) + 2)
 end
 
-function Tween:update(dt)
-  return self:set(self.clock + dt)
+tween.easing = easing
+
+function tween.ease(name, t)
+    local fn = easing[name] or easing.linear
+    return fn(math.max(0, math.min(1, t)))
 end
 
-function tween.new(duration, subject, target, easing)
-  assert(type(duration) == "number" and duration > 0, "duration must be a positive number")
-  assert(type(subject) == "table", "subject must be a table")
-  assert(type(target) == "table", "target must be a table")
-  easing = easing or "linear"
-  if type(easing) == "string" then
-    easing = tween.easing[easing]
-    assert(type(easing) == "function", "unknown easing function")
-  end
+function tween.lerp(a, b, t)
+    return a + (b - a) * t
+end
 
-  local initial = {}
-  for k, _ in pairs(target) do
-    initial[k] = subject[k] or 0
-  end
+-- Tween Instance
+local TweenInstance = {}
+TweenInstance.__index = TweenInstance
 
-  return setmetatable({
-    duration = duration,
-    subject = subject,
-    target = target,
-    initial = initial,
-    easing = easing,
-    clock = 0
-  }, Tween)
+function TweenInstance:set(clock)
+    self.clock = math.max(0, math.min(self.duration, clock))
+    local progress = self.duration > 0 and (self.clock / self.duration) or 1
+    local eased = self.easeFn(progress)
+
+    for key, initial in pairs(self.initial) do
+        local delta = self.diff[key]
+        self.subject[key] = initial + delta * eased
+    end
+    return self.clock >= self.duration
+end
+
+function TweenInstance:update(dt)
+    return self:set(self.clock + dt)
+end
+
+function TweenInstance:reset()
+    return self:set(0)
+end
+
+function tween.new(duration, subject, target, easeName)
+    assert(type(duration) == "number" and duration >= 0, "duration must be a non-negative number")
+    assert(type(subject) == "table", "subject must be a table")
+    assert(type(target) == "table", "target must be a table")
+
+    local easeFn = type(easeName) == "function" and easeName or (easing[easeName] or easing.linear)
+    local initial = {}
+    local diff = {}
+
+    for k, v in pairs(target) do
+        if type(v) == "number" and type(subject[k]) == "number" then
+            initial[k] = subject[k]
+            diff[k] = v - subject[k]
+        end
+    end
+
+    local inst = setmetatable({
+        duration = duration,
+        subject = subject,
+        target = target,
+        initial = initial,
+        diff = diff,
+        easeFn = easeFn,
+        clock = 0
+    }, TweenInstance)
+
+    return inst
 end
 
 return tween

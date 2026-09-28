@@ -1,51 +1,56 @@
--- classic.lua - Classic Object-Oriented Programming for Lua
--- Copyright (c) 2014, rxi (MIT License)
+--[[
+  classic.lua - Original Lightweight OOP & Class System
+  Author: Seashyne (https://github.com/seashyne/Libraries)
+  License: MIT
+--]]
 
 local Object = {}
 Object.__index = Object
 
-function Object:new() end
+function Object:new(...)
+    -- Subclasses override this constructor
+end
 
 function Object:extend()
-  local cls = {}
-  for k, v in pairs(self) do
-    if k:find("__") == 1 then
-      cls[k] = v
-    end
-  end
-  cls.__index = cls
-  cls.super = self
-  setmetatable(cls, self)
-  return cls
+    local cls = {}
+    cls.__index = cls
+    cls.super = self
+    setmetatable(cls, self)
+    return cls
 end
 
 function Object:implement(...)
-  for _, cls in ipairs({...}) do
-    for k, v in pairs(cls) do
-      if self[k] == nil and type(v) == "function" then
-        self[k] = v
-      end
+    for i = 1, select("#", ...) do
+        local trait = select(i, ...)
+        for k, v in pairs(trait) do
+            if self[k] == nil and type(v) == "function" then
+                self[k] = v
+            end
+        end
     end
-  end
 end
 
-function Object:is(T)
-  local mt = getmetatable(self)
-  while mt do
-    if mt == T then return true end
-    mt = getmetatable(mt)
-  end
-  return false
+function Object:is(targetClass)
+    local mt = getmetatable(self)
+    while mt do
+        if mt == targetClass then return true end
+        mt = mt.super or getmetatable(mt)
+    end
+    return false
 end
 
 function Object:__tostring()
-  return "Object"
+    return "Object"
 end
 
 function Object:__call(...)
-  local obj = setmetatable({}, self)
-  obj:new(...)
-  return obj
+    local instance = setmetatable({}, self)
+    instance:new(...)
+    return instance
 end
 
-return Object
+return setmetatable(Object, {
+    __call = function(self, ...)
+        return self:__call(...)
+    end
+})

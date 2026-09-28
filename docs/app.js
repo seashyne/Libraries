@@ -114,6 +114,45 @@ local data = { id = 101, tags = {"hero", "avatar"}, stats = { hp = 100 } }
 print(inspect(data))`
   },
   {
+    id: "lua-color",
+    name: "color.lua",
+    language: "lua",
+    version: "1.0.0",
+    category: "Utility / Colors",
+    description: "Original RGBA, Hex, integer bitpacking, and color lerp utilities.",
+    file: "../lua/color.lua",
+    raw_url: "https://raw.githubusercontent.com/seashyne/Libraries/main/lua/color.lua",
+    cdn_url: "https://cdn.jsdelivr.net/gh/seashyne/Libraries@main/lua/color.lua",
+    tags: ["color", "rgba", "hex", "lerp", "lua"],
+    sample: `local Color = require("color")
+
+local red = Color.fromHex("#FF0000")
+local blue = Color.fromHex("#0000FF")
+local purple = red:lerp(blue, 0.5)
+print(purple:toHex())`
+  },
+  {
+    id: "lua-timer",
+    name: "timer.lua",
+    language: "lua",
+    version: "1.0.0",
+    category: "Utility / Scheduler",
+    description: "Original delay, periodic timer, and animation task scheduler.",
+    file: "../lua/timer.lua",
+    raw_url: "https://raw.githubusercontent.com/seashyne/Libraries/main/lua/timer.lua",
+    cdn_url: "https://cdn.jsdelivr.net/gh/seashyne/Libraries@main/lua/timer.lua",
+    tags: ["timer", "scheduler", "delay", "tasks", "lua"],
+    sample: `local timer = require("timer")
+
+-- Run once after 2 seconds
+timer.after(2.0, function()
+    print("2 seconds passed!")
+end)
+
+-- In game tick loop:
+timer.update(dt)`
+  },
+  {
     id: "c-tween",
     name: "seashyne_tween.h",
     language: "c",

@@ -11,10 +11,11 @@ A unified, lightweight, cross-language developer library ecosystem designed for 
 
 ## 🌟 Key Principles
 
-1. **Zero External Dependencies**: Every library is 100% self-contained pure code. No bloated npm/pip/nuget dependency trees.
-2. **Cross-Language Consistency**: Algorithms (Robert Penner easing, Perlin/Simplex noise, Vector mathematics, Signal/Observer events) work identically across all 5 supported languages.
-3. **Plug-and-Play**: Copy a single `.lua`, `.h`, `.hpp`, or `.cs` file directly into your project, or consume via raw CDN URLs.
-4. **Machine-Readable Registry**: Includes [`registry.json`](registry.json) for automated tooling, package managers, and runtime loaders.
+1. **100% Original Seashyne Creations**: Everything in this repository is designed and written directly by Seashyne. We do not import or vend third-party dependencies or foreign library files.
+2. **Zero External Dependencies**: Every library is 100% self-contained pure code. No bloated npm/pip/nuget dependency trees.
+3. **Cross-Language Consistency**: Algorithms (Robert Penner easing, Perlin/Simplex noise, Vector mathematics, Signal/Observer events) work identically across all 5 supported languages.
+4. **Plug-and-Play**: Copy a single `.lua`, `.h`, `.hpp`, or `.cs` file directly into your project, or consume via raw CDN URLs.
+5. **Machine-Readable Registry**: Includes [`registry.json`](registry.json) for automated tooling, package managers, and runtime loaders.
 
 ---
 
@@ -33,15 +34,17 @@ Visit the interactive catalog at **[seashyne.github.io/Libraries](https://seashy
 ```
 Libraries/
 ├── registry.json                 # Machine-readable catalog metadata
-├── lua/                          # Pure Lua 5.1/5.2/5.3/5.4 & LuaJIT
-│   ├── classic.lua               # OOP / Class system
-│   ├── tween.lua                 # Tweening & Easing equations
-│   ├── noise.lua                 # 1D/2D/3D Perlin & Simplex noise
-│   ├── vector.lua                # 2D/3D Vector math
-│   ├── signal.lua                # Event / Observer dispatcher
-│   └── inspect.lua               # Table serialization & debug
+├── lua/                          # Pure Lua 5.1/5.2/5.3/5.4 & LuaJIT (100% Original)
+│   ├── classic.lua               # OOP / Class system with single inheritance
+│   ├── tween.lua                 # Complete tweening engine with 24+ easing equations
+│   ├── vector.lua                # 2D/3D Vector math (dot, cross, lerp, distance)
+│   ├── signal.lua                # Decoupled Event / Observer dispatcher
+│   ├── color.lua                 # RGBA, Hex, integer bitpacking, and color lerp
+│   ├── timer.lua                 # Animation and game delay/periodic timer scheduler
+│   ├── noise.lua                 # 1D/2D/3D Perlin noise generator
+│   └── inspect.lua               # Table serializer, cycle-detection, and debug
 │
-├── c/                            # Single-Header C99/C11
+├── c/                            # Single-Header C99/C11 (100% Original)
 │   └── include/
 │       ├── seashyne_tween.h      # Easing & lerp curves
 │       ├── seashyne_math.h       # Vector2 & Vector3 math
