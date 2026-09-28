@@ -1,0 +1,35 @@
+# Visual Studio / VS Code
+.vscode/
+.vs/
+*.user
+
+# .NET / C#
+bin/
+obj/
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+build/
+dist/
+*.egg-info/
+
+# C / C++
+*.o
+*.obj
+*.out
+*.exe
+*.dll
+*.dylib
+*.a
+*.lib
+
+# OS
+.DS_Store
+Thumbs.db
